@@ -15,7 +15,7 @@ stop_words_ca = ["a","abans","ací","ah","així","això","al","aleshores","algun
 
 lemmatizer = WordNetLemmatizer()
 
-'''
+#elimina a pontuação
 def clean_text(text):
     """
     Basic text cleaning:
@@ -31,9 +31,10 @@ def clean_text(text):
     text = re.sub(r"[^\w\s]", "", text)
     text = text.strip()
 
-    return text'''
+    return text
 
-def clean_text_light(text):
+#não elimina a pontuação
+'''def clean_text_light(text):
     """
     Light text cleaning:
     - lowercase
@@ -43,7 +44,7 @@ def clean_text_light(text):
     text = str(text).lower()
     text = re.sub(r"http\S+|www\S+", "", text)
     text = re.sub(r"\s+", " ", text).strip()
-    return text
+    return text'''
 
 
 def tokenize(text):
@@ -78,7 +79,7 @@ def lemmatize_tokens(tokens, lang):
         return tokens
 
 
-'''def preprocess_text(text, lang):
+def preprocess_text(text, lang):
     """
     Full preprocessing pipeline
     """
@@ -87,9 +88,9 @@ def lemmatize_tokens(tokens, lang):
     tokens = remove_stopwords(tokens, lang)
     tokens = lemmatize_tokens(tokens, lang)
 
-    return " ".join(tokens)'''
+    return " ".join(tokens)
 
-def preprocess_text(text, lang):
+'''def preprocess_text(text, lang):
     """
     Light preprocessing pipeline
     """
@@ -97,4 +98,4 @@ def preprocess_text(text, lang):
     tokens = tokenize(text)
     tokens = remove_stopwords(tokens, lang)
     tokens = lemmatize_tokens(tokens, lang)
-    return " ".join(tokens)
+    return " ".join(tokens)'''
