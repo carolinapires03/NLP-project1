@@ -2,8 +2,6 @@ import re
 import nltk
 import spacy
 
-
-from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
@@ -38,6 +36,9 @@ def clean_text(text):
 
     return text'''
 
+def remove_punctuation(tokens):
+    return [word for word in tokens if re.match(r"\w+", word)]
+
 def clean_text_light(text):
     """
     Light text cleaning:
@@ -51,11 +52,16 @@ def clean_text_light(text):
     return text
 
 
-def tokenize(text):
-    """
-    Tokenize text into words
-    """
-    return word_tokenize(text)
+def tokenize(text, lang):
+    
+    if lang == "es":
+        doc = nlp_es(text)
+    elif lang == "ca":
+        doc = nlp_ca(text)
+    else:
+        doc = nlp_es(text)  # fallback
+
+    return [token.text for token in doc]
 
 
 def remove_stopwords(tokens, lang):
@@ -114,12 +120,17 @@ def lemmatize_tokens(tokens, lang):
 
     return " ".join(tokens)'''
 
-def preprocess_text(text, lang):
-    """
-    Light preprocessing pipeline
-    """
+def preprocess_text(text, lang, remove_punct=True):
+
     text = clean_text_light(text)
-    tokens = tokenize(text)
+
+    tokens = tokenize(text, lang)
+
+    if remove_punct:
+        tokens = [t for t in tokens if t.isalnum()]
+
     tokens = remove_stopwords(tokens, lang)
+
     tokens = lemmatize_tokens(tokens, lang)
+
     return " ".join(tokens)
