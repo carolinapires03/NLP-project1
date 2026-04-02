@@ -4,6 +4,7 @@ import spacy
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
 
 nltk.download("punkt")
 nltk.download("stopwords")
@@ -51,17 +52,21 @@ def clean_text_light(text):
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
-
 def tokenize(text, lang):
     
     if lang == "es":
         doc = nlp_es(text)
+        return [token.text for token in doc]
+    
     elif lang == "ca":
         doc = nlp_ca(text)
+        return [token.text for token in doc]
+    
+    elif lang == "en":
+        return word_tokenize(text)
+    
     else:
-        doc = nlp_es(text)  # fallback
-
-    return [token.text for token in doc]
+        return text.split()
 
 
 def remove_stopwords(tokens, lang):
