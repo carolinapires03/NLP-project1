@@ -1,0 +1,11 @@
+
+.DS_Store
+__pycache__/
+*.pyc
+data/features/
+data/raw/train_raw.csv
+
+.DS_Store
+__pycache__/
+*.pyc
+data/features/
