@@ -19,34 +19,12 @@ stop_words_ca = ["a","abans","ací","ah","així","això","al","aleshores","algun
 
 lemmatizer = WordNetLemmatizer()
 
-'''
-def clean_text(text):
-    """
-    Basic text cleaning:
-    - lowercase
-    - remove URLs
-    - remove numbers
-    - remove punctuation
-    - remove extra spaces
-    """
-    text = str(text).lower()
-    text = re.sub(r"http\S+|www\S+", "", text)
-    text = re.sub(r"\d+", "", text)
-    text = re.sub(r"[^\w\s]", "", text)
-    text = text.strip()
-
-    return text'''
-
 def remove_punctuation(tokens):
+
     return [word for word in tokens if re.match(r"\w+", word)]
 
 def clean_text_light(text):
-    """
-    Light text cleaning:
-    - lowercase
-    - remove URLs
-    - remove extra spaces
-    """
+
     text = str(text).lower()
     text = re.sub(r"http\S+|www\S+", "", text)
     text = re.sub(r"\s+", " ", text).strip()
@@ -70,9 +48,7 @@ def tokenize(text, lang):
 
 
 def remove_stopwords(tokens, lang):
-    """
-    Remove stopwords according to language
-    """
+
     if lang == "en":
         stop_words = stop_words_en
     elif lang == "es":
@@ -83,22 +59,8 @@ def remove_stopwords(tokens, lang):
     return [word for word in tokens if word not in stop_words]
 
 
-#def lemmatize_tokens(tokens, lang):
-#    """
-#    Lemmatize tokens.
-#    Applied only to English because WordNetLemmatizer is English-based.
-#    """
-#    if lang == "en":
-#        return [lemmatizer.lemmatize(word) for word in tokens]
-#    else:
-#        return tokens
-
 def lemmatize_tokens(tokens, lang):
-    """
-    Lemmatize tokens according to language.
-    English: NLTK WordNetLemmatizer
-    Spanish/Catalan: spaCy lemmatizer
-    """
+
     if lang == "en":
         return [lemmatizer.lemmatize(word) for word in tokens]
 
@@ -113,17 +75,6 @@ def lemmatize_tokens(tokens, lang):
         return [token.lemma_ for token in doc if token.lemma_.strip()]
 
     return tokens
-
-'''def preprocess_text(text, lang):
-    """
-    Full preprocessing pipeline
-    """
-    text = clean_text(text)
-    tokens = tokenize(text)
-    tokens = remove_stopwords(tokens, lang)
-    tokens = lemmatize_tokens(tokens, lang)
-
-    return " ".join(tokens)'''
 
 def preprocess_text(text, lang, remove_punct=True):
 
